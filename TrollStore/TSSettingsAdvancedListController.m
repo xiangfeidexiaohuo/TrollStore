@@ -17,10 +17,10 @@ extern NSUserDefaults* trollStoreUserDefaults();
 
 		PSSpecifier* installationMethodGroupSpecifier = [PSSpecifier emptyGroupSpecifier];
 		//installationMethodGroupSpecifier.name = @"Installation";
-		[installationMethodGroupSpecifier setProperty:@"installd:\nInstalls applications by doing a placeholder installation through installd, fixing the permissions and then adding it to icon cache.\nAdvantage: Might be slightly more persistent than the custom method in terms of icon cache reloads.\nDisadvantage: Causes some small issues with certain applications for seemingly no reason (E.g. Watusi cannot save preferences when being installed using this method).\n\nCustom (Recommended):\nInstalls applications by manually creating a bundle using MobileContainerManager, copying the app into it and adding it to icon cache.\nAdvantage: No known issues (As opposed to the Watusi issue outlined in the installd method).\nDisadvantage: Might be slightly less persistent then the installd method in terms of icon cache reloads.\n\nNOTE: In cases where installd is selected but the placeholder installation fails, TrollStore automatically falls back to using the Custom method." forKey:@"footerText"];
+		[installationMethodGroupSpecifier setProperty:NSLocalizedString(@"installd:\nInstalls applications by doing a placeholder installation through installd, fixing the permissions and then adding it to icon cache.\nAdvantage: Might be slightly more persistent than the custom method in terms of icon cache reloads.\nDisadvantage: Causes some small issues with certain applications for seemingly no reason (E.g. Watusi cannot save preferences when being installed using this method).\n\nCustom (Recommended):\nInstalls applications by manually creating a bundle using MobileContainerManager, copying the app into it and adding it to icon cache.\nAdvantage: No known issues (As opposed to the Watusi issue outlined in the installd method).\nDisadvantage: Might be slightly less persistent then the installd method in terms of icon cache reloads.\n\nNOTE: In cases where installd is selected but the placeholder installation fails, TrollStore automatically falls back to using the Custom method.", nil) forKey:@"footerText"];
 		[_specifiers addObject:installationMethodGroupSpecifier];
 
-		PSSpecifier* installationMethodSpecifier = [PSSpecifier preferenceSpecifierNamed:@"Installation Method"
+		PSSpecifier* installationMethodSpecifier = [PSSpecifier preferenceSpecifierNamed:NSLocalizedString(@"Installation Method", nil)
 											target:self
 											set:nil
 											get:nil
@@ -31,7 +31,7 @@ extern NSUserDefaults* trollStoreUserDefaults();
 		installationMethodSpecifier.identifier = @"installationMethodLabel";
 		[_specifiers addObject:installationMethodSpecifier];
 
-		PSSpecifier* installationMethodSegmentSpecifier = [PSSpecifier preferenceSpecifierNamed:@"Installation Method Segment"
+		PSSpecifier* installationMethodSegmentSpecifier = [PSSpecifier preferenceSpecifierNamed:NSLocalizedString(@"Installation Method Segment", nil)
 											target:self
 											set:@selector(setPreferenceValue:specifier:)
 											get:@selector(readPreferenceValue:)
@@ -43,16 +43,16 @@ extern NSUserDefaults* trollStoreUserDefaults();
 		[installationMethodSegmentSpecifier setProperty:APP_ID forKey:@"defaults"];
 		[installationMethodSegmentSpecifier setProperty:@"installationMethod" forKey:@"key"];
 		installationMethodSegmentSpecifier.values = @[@0, @1];
-		installationMethodSegmentSpecifier.titleDictionary = @{@0 : @"installd", @1 : @"Custom"};
+		installationMethodSegmentSpecifier.titleDictionary = @{@0 : NSLocalizedString(@"installd", nil), @1 : NSLocalizedString(@"Custom", nil)};
 		[installationMethodSegmentSpecifier setProperty:@1 forKey:@"default"];
 		[_specifiers addObject:installationMethodSegmentSpecifier];
 
 		PSSpecifier* uninstallationMethodGroupSpecifier = [PSSpecifier emptyGroupSpecifier];
 		//uninstallationMethodGroupSpecifier.name = @"Uninstallation";
-		[uninstallationMethodGroupSpecifier setProperty:@"installd (Recommended):\nUninstalls applications using the same API that SpringBoard uses when uninstalling them from the home screen.\n\nCustom:\nUninstalls applications by removing them from icon cache and then deleting their application and data bundles directly.\n\nNOTE: In cases where installd is selected but the stock uninstallation fails, TrollStore automatically falls back to using the Custom method." forKey:@"footerText"];
+		[uninstallationMethodGroupSpecifier setProperty:NSLocalizedString(@"installd (Recommended):\nUninstalls applications using the same API that SpringBoard uses when uninstalling them from the home screen.\n\nCustom:\nUninstalls applications by removing them from icon cache and then deleting their application and data bundles directly.\n\nNOTE: In cases where installd is selected but the stock uninstallation fails, TrollStore automatically falls back to using the Custom method.", nil) forKey:@"footerText"];
 		[_specifiers addObject:uninstallationMethodGroupSpecifier];
 
-		PSSpecifier* uninstallationMethodSpecifier = [PSSpecifier preferenceSpecifierNamed:@"Uninstallation Method"
+		PSSpecifier* uninstallationMethodSpecifier = [PSSpecifier preferenceSpecifierNamed:NSLocalizedString(@"Uninstallation Method", nil)
 											target:self
 											set:nil
 											get:nil
@@ -63,7 +63,7 @@ extern NSUserDefaults* trollStoreUserDefaults();
 		uninstallationMethodSpecifier.identifier = @"uninstallationMethodLabel";
 		[_specifiers addObject:uninstallationMethodSpecifier];
 
-		PSSpecifier* uninstallationMethodSegmentSpecifier = [PSSpecifier preferenceSpecifierNamed:@"Installation Method Segment"
+		PSSpecifier* uninstallationMethodSegmentSpecifier = [PSSpecifier preferenceSpecifierNamed:NSLocalizedString(@"Installation Method Segment", nil)
 											target:self
 											set:@selector(setPreferenceValue:specifier:)
 											get:@selector(readPreferenceValue:)
@@ -75,12 +75,12 @@ extern NSUserDefaults* trollStoreUserDefaults();
 		[uninstallationMethodSegmentSpecifier setProperty:APP_ID forKey:@"defaults"];
 		[uninstallationMethodSegmentSpecifier setProperty:@"uninstallationMethod" forKey:@"key"];
 		uninstallationMethodSegmentSpecifier.values = @[@0, @1];
-		uninstallationMethodSegmentSpecifier.titleDictionary = @{@0 : @"installd", @1 : @"Custom"};
+		uninstallationMethodSegmentSpecifier.titleDictionary = @{@0 : NSLocalizedString(@"installd", nil), @1 : NSLocalizedString(@"Custom", nil)};
 		[uninstallationMethodSegmentSpecifier setProperty:@0 forKey:@"default"];
 		[_specifiers addObject:uninstallationMethodSegmentSpecifier];
 	}
 
-	[(UINavigationItem *)self.navigationItem setTitle:@"Advanced"];
+	[(UINavigationItem *)self.navigationItem setTitle:NSLocalizedString(@"Advanced", nil)];
 	return _specifiers;
 }
 

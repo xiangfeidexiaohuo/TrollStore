@@ -13,7 +13,7 @@ extern NSUserDefaults* trollStoreUserDefaults(void);
 {
 	dispatch_async(dispatch_get_main_queue(), ^
 	{
-		[TSPresentationDelegate startActivity:@"Installing"];
+		[TSPresentationDelegate startActivity:NSLocalizedString(@"Installing", nil)];
 		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^
 		{
 			// Install IPA
@@ -37,14 +37,14 @@ extern NSUserDefaults* trollStoreUserDefaults(void);
 						if(completionBlock) completionBlock(YES, nil);
 					} else if (ret == 171) {
 						// recoverable error
-						UIAlertController* errorAlert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"Install Error %d", ret] message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
-						UIAlertAction* closeAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleDefault handler:^(UIAlertAction* action)
+						UIAlertController* errorAlert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Install Error %d", nil), ret] message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+						UIAlertAction* closeAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction* action)
 						{
 							if(completionBlock) completionBlock(NO, error);
 						}];
 						[errorAlert addAction:closeAction];
 
-						UIAlertAction* forceInstallAction = [UIAlertAction actionWithTitle:@"Force Installation" style:UIAlertActionStyleDefault handler:^(UIAlertAction* action)
+						UIAlertAction* forceInstallAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Force Installation", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction* action)
 						{
 							[self handleAppInstallFromFile:pathToIPA forceInstall:YES completion:completionBlock];
 						}];
@@ -53,14 +53,14 @@ extern NSUserDefaults* trollStoreUserDefaults(void);
 						[TSPresentationDelegate presentViewController:errorAlert animated:YES completion:nil];
 					} else if (ret == 182) {
 						// non-fatal informative message
-						UIAlertController* rebootNotification = [UIAlertController alertControllerWithTitle:@"Reboot Required" message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
-						UIAlertAction* closeAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:^(UIAlertAction* action)
+						UIAlertController* rebootNotification = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Reboot Required", nil)  message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+						UIAlertAction* closeAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction* action)
 						{
 							if(completionBlock) completionBlock(YES, nil);
 						}];
 						[rebootNotification addAction:closeAction];
 
-						UIAlertAction* rebootAction = [UIAlertAction actionWithTitle:@"Reboot Now" style:UIAlertActionStyleDefault handler:^(UIAlertAction* action)
+						UIAlertAction* rebootAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Reboot Now", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction* action)
 						{
 							if(completionBlock) completionBlock(YES, nil);
 							spawnRoot(rootHelperPath(), @[@"reboot"], nil, nil);
@@ -70,8 +70,8 @@ extern NSUserDefaults* trollStoreUserDefaults(void);
 						[TSPresentationDelegate presentViewController:rebootNotification animated:YES completion:nil];
 					} else if (ret == 184) {
 						// warning
-						UIAlertController* warningAlert = [UIAlertController alertControllerWithTitle:@"Warning" message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
-						UIAlertAction* closeAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleCancel handler:^(UIAlertAction* action)
+						UIAlertController* warningAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Warning", nil) message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+						UIAlertAction* closeAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction* action)
 						{
 							if(completionBlock) completionBlock(YES, nil);
 						}];
@@ -80,11 +80,11 @@ extern NSUserDefaults* trollStoreUserDefaults(void);
 						[TSPresentationDelegate presentViewController:warningAlert animated:YES completion:nil];
 					} else {
 						// unrecoverable error
-						UIAlertController* errorAlert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"Install Error %d", ret] message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
-						UIAlertAction* closeAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleDefault handler:nil];
+						UIAlertController* errorAlert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Install Error %d", nil), ret] message:[error localizedDescription] preferredStyle:UIAlertControllerStyleAlert];
+						UIAlertAction* closeAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleDefault handler:nil];
 						[errorAlert addAction:closeAction];
 
-						UIAlertAction* copyLogAction = [UIAlertAction actionWithTitle:@"Copy Debug Log" style:UIAlertActionStyleDefault handler:^(UIAlertAction* action)
+						UIAlertAction* copyLogAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Copy Debug Log", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction* action)
 						{
 							UIPasteboard* pasteboard = [UIPasteboard generalPasteboard];
 							pasteboard.string = log;
@@ -135,13 +135,13 @@ extern NSUserDefaults* trollStoreUserDefaults(void);
 				UIAlertController* installAlert = [UIAlertController alertControllerWithTitle:@"" message:@"" preferredStyle:UIAlertControllerStyleAlert];
 				installAlert.attributedTitle = [appInfo detailedInfoTitle];
 				installAlert.attributedMessage = [appInfo detailedInfoDescription];
-				UIAlertAction* installAction = [UIAlertAction actionWithTitle:@"Install" style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
+				UIAlertAction* installAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Install", nil) style:UIAlertActionStyleDefault handler:^(UIAlertAction *action)
 				{
 					[self handleAppInstallFromFile:pathToIPA completion:completionBlock];
 				}];
 				[installAlert addAction:installAction];
 
-				UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction* action)
+				UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:^(UIAlertAction* action)
 				{
 					if(completionBlock) completionBlock(NO, nil);
 				}];
@@ -151,8 +151,8 @@ extern NSUserDefaults* trollStoreUserDefaults(void);
 			}
 			else
 			{
-				UIAlertController* errorAlert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:@"Parse Error %ld", error.code] message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
-				UIAlertAction* closeAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleDefault handler:nil];
+				UIAlertController* errorAlert = [UIAlertController alertControllerWithTitle:[NSString stringWithFormat:NSLocalizedString(@"Parse Error %ld", nil), error.code] message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+				UIAlertAction* closeAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleDefault handler:nil];
 				[errorAlert addAction:closeAction];
 
 				[TSPresentationDelegate presentViewController:errorAlert animated:YES completion:nil];
@@ -180,8 +180,8 @@ extern NSUserDefaults* trollStoreUserDefaults(void);
 				{
 					if(error)
 					{
-						UIAlertController* errorAlert = [UIAlertController alertControllerWithTitle:@"Error" message:[NSString stringWithFormat:@"Error downloading app: %@", error] preferredStyle:UIAlertControllerStyleAlert];
-						UIAlertAction* closeAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleDefault handler:nil];
+						UIAlertController* errorAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"Error downloading app: %@", nil), error] preferredStyle:UIAlertControllerStyleAlert];
+						UIAlertAction* closeAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleDefault handler:nil];
 						[errorAlert addAction:closeAction];
 
 						[TSPresentationDelegate presentViewController:errorAlert animated:YES completion:^
@@ -204,7 +204,7 @@ extern NSUserDefaults* trollStoreUserDefaults(void);
 			});
 		}];
 
-		[TSPresentationDelegate startActivity:@"Downloading" withCancelHandler:^
+		[TSPresentationDelegate startActivity:NSLocalizedString(@"Downloading", nil) withCancelHandler:^
 		{
 			[downloadTask cancel];
 		}];
@@ -223,14 +223,14 @@ extern NSUserDefaults* trollStoreUserDefaults(void);
 			NSURL* ldidURL = [NSURL URLWithString:@"https://github.com/opa334/ldid/releases/latest/download/ldid"];
 			NSURLRequest* ldidRequest = [NSURLRequest requestWithURL:ldidURL];
 
-			[TSPresentationDelegate startActivity:@"Installing ldid"];
+			[TSPresentationDelegate startActivity:NSLocalizedString(@"Installing ldid", nil)];
 
 			NSURLSessionDownloadTask* downloadTask = [NSURLSession.sharedSession downloadTaskWithRequest:ldidRequest completionHandler:^(NSURL *location, NSURLResponse *response, NSError *error)
 			{
 				if(error)
 				{
-					UIAlertController* errorAlert = [UIAlertController alertControllerWithTitle:@"Error" message:[NSString stringWithFormat:@"Error downloading ldid: %@", error] preferredStyle:UIAlertControllerStyleAlert];
-					UIAlertAction* closeAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleDefault handler:nil];
+					UIAlertController* errorAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"Error downloading ldid: %@", nil), error] preferredStyle:UIAlertControllerStyleAlert];
+					UIAlertAction* closeAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleDefault handler:nil];
 					[errorAlert addAction:closeAction];
 
 					dispatch_async(dispatch_get_main_queue(), ^

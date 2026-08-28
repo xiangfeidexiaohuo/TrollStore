@@ -40,10 +40,10 @@
 				else if([url.pathExtension.lowercaseString isEqualToString:@"tar"])
 				{
 					// Update TrollStore itself
-					NSLog(@"Updating TrollStore...");
+					NSLog(NSLocalizedString(@"Updating TrollStore...", nil));
 					int ret = spawnRoot(rootHelperPath(), @[@"install-trollstore", url.path], nil, nil);
 					doneBlock(ret == 0);
-					NSLog(@"Updated TrollStore!");
+					NSLog(NSLocalizedString(@"Updated TrollStore!", nil));
 				}
 			}
 			else if([url.scheme isEqualToString:@"apple-magnifier"])
@@ -106,9 +106,9 @@
 		NSString* failMessage = @"";
 		// we don't have TSAppInfo here so we cannot check the registration state
 
-		NSString* failTitle = [NSString stringWithFormat:@"Failed to open %@", appId];
+		NSString* failTitle = [NSString stringWithFormat:NSLocalizedString(@"Failed to open %@", nil), appId];
 		UIAlertController* didFailController = [UIAlertController alertControllerWithTitle:failTitle message:failMessage preferredStyle:UIAlertControllerStyleAlert];
-		UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+		UIAlertAction* cancelAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Cancel", nil) style:UIAlertActionStyleCancel handler:nil];
 
 		[didFailController addAction:cancelAction];
 		[TSPresentationDelegate presentViewController:didFailController animated:YES completion:nil];
@@ -118,8 +118,8 @@
 		int ret = [appsManager enableJITForBundleID:appId];
 		if (ret != 0)
 		{
-			UIAlertController* errorAlert = [UIAlertController alertControllerWithTitle:@"Error" message:[NSString stringWithFormat:@"Error enabling JIT: trollstorehelper returned %d", ret] preferredStyle:UIAlertControllerStyleAlert];
-			UIAlertAction* closeAction = [UIAlertAction actionWithTitle:@"Close" style:UIAlertActionStyleDefault handler:nil];
+			UIAlertController* errorAlert = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Error", nil) message:[NSString stringWithFormat:NSLocalizedString(@"Error enabling JIT: trollstorehelper returned %d", nil), ret] preferredStyle:UIAlertControllerStyleAlert];
+			UIAlertAction* closeAction = [UIAlertAction actionWithTitle:NSLocalizedString(@"Close", nil) style:UIAlertActionStyleDefault handler:nil];
 			[errorAlert addAction:closeAction];
 			[TSPresentationDelegate presentViewController:errorAlert animated:YES completion:nil];
 		}
