@@ -1,8 +1,9 @@
-Package: com.opa334.trollstorelite
-Name: TrollStore Lite (RootHide)
+Package: com.dao.tslite
+Name: TrollStoreLite(RootHide)
 Version: 2.1.1-1
 Architecture: iphoneos-arm
-Description: TrollStore for RootHide jailbroken iOS
+Description: 白巨魔，越狱专用的APP安装器，Relaxin(隐根)优化版，支持中英文翻译。
 Maintainer: opa334
 Author: opa334
 Section: Applications
+Conflicts: com.opa334.trollstorelite
