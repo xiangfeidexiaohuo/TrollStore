@@ -1,0 +1,78 @@
+name: Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build with Theos
+    runs-on: macos-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        submodules: true
+
+    - name: Install Theos
+      uses: xiangfeidexiaohuo/theos-action@main
+
+    - name: Install libarchive
+      run: |
+        brew install libarchive
+
+    - name: Get version
+      id: version
+      run: |
+        APP_VERSION=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" TrollStore/Resources/Info.plist)
+        echo "version=v$APP_VERSION" >> "$GITHUB_OUTPUT"
+
+    - name: Remove installer targets (require InstallerVictim.ipa not in repo)
+      run: |
+        sed -i '' 's/build_installer15 build_installer64e//g' Makefile
+
+    - name: Build TrollStore.tar
+      run: |
+        make
+
+    - name: Save TrollStore
+      run: |
+        mkdir -p _artifacts
+        cp _build/TrollStore.tar _artifacts/
+        ls -la TrollStoreLite/packages/ 2>/dev/null || true
+        cp TrollStoreLite/packages/*.deb _artifacts/ 2>/dev/null || true        
+
+    - name: Build TrollStoreLite roothide
+      run: |
+        make trollstore_lite_roothide
+
+    - name: Collect artifacts
+      run: |
+        ls -la TrollStoreLiteRoothide/packages/ 2>/dev/null || true
+        cp TrollStoreLiteRoothide/packages/*.deb _artifacts/ 2>/dev/null || true
+        ls -la _artifacts/
+
+    - name: Create release
+      uses: sbwml/release-action@main
+      if: github.event_name != 'pull_request'
+      with:
+        name: ${{ steps.version.outputs.version }}
+        allowUpdates: true
+        tag: ${{ steps.version.outputs.version }}
+        commit: ${{ github.ref_name }}
+        replacesArtifacts: true
+        token: ${{ secrets.RELEASE_TOKEN }}
+        artifacts: |
+          _artifacts/com.dao.tslite_*.deb
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@main
+      if: always()
+      with:
+        name: TrollStore-Build
+        path: _artifacts/*

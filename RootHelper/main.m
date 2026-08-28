@@ -357,7 +357,7 @@ int runLdid(NSArray* args, NSString** output, NSString** errorOutput)
 	return WEXITSTATUS(status);
 }
 
-static NSString *pathForLdid(NSString *path)
+__attribute__((unused)) static NSString *pathForLdid(NSString *path)
 {
 #ifdef TROLLSTORE_LITE
 	return path;
