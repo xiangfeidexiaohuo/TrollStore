@@ -9,10 +9,10 @@
 	[super loadView];
 
 	TSAppTableViewController* appTableVC = [[TSAppTableViewController alloc] init];
-	appTableVC.title = @"Apps";
+	appTableVC.title = NSLocalizedString(@"Apps", nil);
 
 	TSSettingsListController* settingsListVC = [[TSSettingsListController alloc] init];
-	settingsListVC.title = @"Settings";
+	settingsListVC.title = NSLocalizedString(@"Settings", nil);
 
 	UINavigationController* appNavigationController = [[UINavigationController alloc] initWithRootViewController:appTableVC];
 	UINavigationController* settingsNavigationController = [[UINavigationController alloc] initWithRootViewController:settingsListVC];
@@ -20,7 +20,7 @@
 	appNavigationController.tabBarItem.image = [UIImage systemImageNamed:@"square.stack.3d.up.fill"];
 	settingsNavigationController.tabBarItem.image = [UIImage systemImageNamed:@"gear"];
 
-	self.title = @"Root View Controller";
+	self.title = NSLocalizedString(@"Root View Controller", nil);
 	self.viewControllers = @[appNavigationController, settingsNavigationController];
 }
 

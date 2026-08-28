@@ -21,76 +21,76 @@ extern NSUserDefaults* trollStoreUserDefaults();
 
 - (NSError*)errorForCode:(int)code
 {
-    NSString* errorDescription = @"Unknown Error";
+        NSString *errorDescription = NSLocalizedString(@"Unknown Error", nil);
     switch(code)
     {
         // IPA install errors
         case 166:
-        errorDescription = @"The IPA file does not exist or is not accessible.";
+        errorDescription = NSLocalizedString(@"The IPA file does not exist or is not accessible.", nil);
         break;
         case 167:
-        errorDescription = @"The IPA file does not appear to contain an app.";
+        errorDescription = NSLocalizedString(@"The IPA file does not appear to contain an app.", nil);
         break;
         case 168:
-        errorDescription = @"Failed to extract IPA file.";
+        errorDescription = NSLocalizedString(@"Failed to extract IPA file.", nil);
         break;
         case 169:
-        errorDescription = @"Failed to extract update tar file.";
+        errorDescription = NSLocalizedString(@"Failed to extract update tar file.", nil);
         break;
         // App install errors
         case 170:
-        errorDescription = @"Failed to create container for app bundle.";
+        errorDescription = NSLocalizedString(@"Failed to create container for app bundle.", nil);
         break;
         case 171:
-        errorDescription = @"A non "APP_NAME@" or a "OTHER_APP_NAME@" app with the same identifier is already installed. If you are absolutely sure it is not, you can force install it.";
+        errorDescription = NSLocalizedString(@"A non "APP_NAME@" or a "OTHER_APP_NAME@" app with the same identifier is already installed. If you are absolutely sure it is not, you can force install it.", nil);
         break;
         case 172:
-        errorDescription = @"The app does not contain an Info.plist file.";
+        errorDescription = NSLocalizedString(@"The app does not contain an Info.plist file.", nil);
         break;
         case 173:
-        errorDescription = @"The app is not signed with a fake CoreTrust certificate and ldid is not installed. Install ldid in the settings tab and try again.";
+        errorDescription = NSLocalizedString(@"The app is not signed with a fake CoreTrust certificate and ldid is not installed. Install ldid in the settings tab and try again.", nil);
         break;
         case 174:
-        errorDescription = @"The app's main executable does not exist.";
+        errorDescription = NSLocalizedString(@"The app's main executable does not exist.", nil);
         break;
         case 175: {
             //if (@available(iOS 16, *)) {
             //    errorDescription = @"Failed to sign the app.";
             //}
             //else {
-                errorDescription = @"Failed to sign the app. ldid returned a non zero status code.";
+                errorDescription = NSLocalizedString(@"Failed to sign the app. ldid returned a non zero status code.", nil);
             //}
         }
         break;
         case 176:
-        errorDescription = @"The app's Info.plist is missing required values.";
+        errorDescription = NSLocalizedString(@"The app's Info.plist is missing required values.", nil);
         break;
         case 177:
-        errorDescription = @"Failed to mark app as TrollStore app.";
+        errorDescription = NSLocalizedString(@"Failed to mark app as TrollStore app.", nil);
         break;
         case 178:
-        errorDescription = @"Failed to copy app bundle.";
+        errorDescription = NSLocalizedString(@"Failed to copy app bundle.", nil);
         break;
         case 179:
-        errorDescription = @"The app you tried to install has the same identifier as a system app already installed on the device. The installation has been prevented to protect you from possible bootloops or other issues.";
+        errorDescription = NSLocalizedString(@"The app you tried to install has the same identifier as a system app already installed on the device. The installation has been prevented to protect you from possible bootloops or other issues.", nil);
         break;
         case 180:
-        errorDescription = @"The app you tried to install has an encrypted main binary, which cannot have the CoreTrust bypass applied to it. Please ensure you install decrypted apps.";
+        errorDescription = NSLocalizedString(@"The app you tried to install has an encrypted main binary, which cannot have the CoreTrust bypass applied to it. Please ensure you install decrypted apps.", nil);
         break;
         case 181:
-        errorDescription = @"Failed to add app to icon cache.";
+        errorDescription = NSLocalizedString(@"Failed to add app to icon cache.", nil);
         break;
         case 182:
-        errorDescription = @"The app was installed successfully, but requires developer mode to be enabled to run. After rebooting, select \"Turn On\" to enable developer mode.";
+        errorDescription = NSLocalizedString(@"The app was installed successfully, but requires developer mode to be enabled to run. After rebooting, select \"Turn On\" to enable developer mode.", nil);
         break;
         case 183:
-        errorDescription = @"Failed to enable developer mode.";
+        errorDescription = NSLocalizedString(@"Failed to enable developer mode.", nil);
         break;
         case 184:
-        errorDescription = @"The app was installed successfully, but has additional binaries that are encrypted (e.g. extensions, plugins). The app itself should work, but you may experience broken functionality as a result.";
+        errorDescription = NSLocalizedString(@"The app was installed successfully, but has additional binaries that are encrypted (e.g. extensions, plugins). The app itself should work, but you may experience broken functionality as a result.", nil);
         break;
         case 185:
-        errorDescription = @"Failed to sign the app. The CoreTrust bypass returned a non zero status code.";
+        errorDescription = NSLocalizedString(@"Failed to sign the app. The CoreTrust bypass returned a non zero status code.", nil);
     }
 
     NSError* error = [NSError errorWithDomain:TrollStoreErrorDomain code:code userInfo:@{NSLocalizedDescriptionKey : errorDescription}];

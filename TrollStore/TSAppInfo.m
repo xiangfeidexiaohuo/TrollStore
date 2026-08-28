@@ -99,7 +99,7 @@ extern UIImage* imageWithSize(UIImage* image, CGSize size);
 
 			if(!_cachedAppBundleName)
 			{
-				NSString* errorDescription = @"Unable to locate app bundle inside the .IPA archive.";
+				NSString* errorDescription = NSLocalizedString(@"Unable to locate app bundle inside the .IPA archive.", nil);
 				outError = [NSError errorWithDomain:TrollStoreErrorDomain code:301 userInfo:@{NSLocalizedDescriptionKey : errorDescription}];
 			}
 		}
@@ -181,7 +181,7 @@ extern UIImage* imageWithSize(UIImage* image, CGSize size);
 
 	if(!_cachedInfoDictionary)
 	{
-		NSString* errorDescription = @"Unable to locate Info.plist inside app bundle.";
+		NSString* errorDescription = NSLocalizedString(@"Unable to locate Info.plist inside app bundle.", nil);
 		return [NSError errorWithDomain:TrollStoreErrorDomain code:302 userInfo:@{NSLocalizedDescriptionKey : errorDescription}];
 	}
 	
@@ -220,7 +220,7 @@ extern UIImage* imageWithSize(UIImage* image, CGSize size);
 				struct archive_entry* mainBinaryEntry = [self archiveEntryForSubpath:bundleExecutableSubpath];
 				if(!mainBinaryEntry)
 				{
-					NSString* errorDescription = @"Unable to locate main binary inside app bundle.";
+					NSString* errorDescription = NSLocalizedString(@"Unable to locate main binary inside app bundle.", nil);
 					return [NSError errorWithDomain:TrollStoreErrorDomain code:303 userInfo:@{NSLocalizedDescriptionKey : errorDescription}];
 				}
 				
@@ -263,7 +263,7 @@ extern UIImage* imageWithSize(UIImage* image, CGSize size);
 
 				if(![[NSFileManager defaultManager] fileExistsAtPath:bundleExecutablePath])
 				{
-					NSString* errorDescription = @"Unable to locate main binary inside app bundle.";
+					NSString* errorDescription = NSLocalizedString(@"Unable to locate main binary inside app bundle.", nil);
 					return [NSError errorWithDomain:TrollStoreErrorDomain code:303 userInfo:@{NSLocalizedDescriptionKey : errorDescription}];
 				}
 
@@ -1063,56 +1063,56 @@ extern UIImage* imageWithSize(UIImage* image, CGSize size);
 		NSForegroundColorAttributeName : dangerColor
 	};
 
-	[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"Metadata" attributes:headerAttributes]];
+	[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"Metadata", nil) attributes:headerAttributes]];
 	
-	[description appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\nBundle Identifier: %@", bundleId] attributes:bodyAttributes]];
-	[description appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\nVersion: %@", version] attributes:bodyAttributes]];
-	[description appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"\nSize: %@", sizeString] attributes:bodyAttributes]];
+	[description appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@"\nBundle Identifier: %@", nil), bundleId] attributes:bodyAttributes]];
+	[description appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@"\nVersion: %@", nil), version] attributes:bodyAttributes]];
+	[description appendAttributedString:[[NSAttributedString alloc] initWithString:[NSString stringWithFormat:NSLocalizedString(@"\nSize: %@", nil), sizeString] attributes:bodyAttributes]];
 	
-	[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n\nSandboxing" attributes:headerAttributes]];
+	[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\n\nSandboxing", nil) attributes:headerAttributes]];
 	if(isUnsandboxed)
 	{
-		[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"\nThe app runs unsandboxed and can access most of the file system." attributes:bodyWarningAttributes]];
+		[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\nThe app runs unsandboxed and can access most of the file system.", nil) attributes:bodyWarningAttributes]];
 	}
 	else
 	{
-		[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"\nThe app runs sandboxed and can only access the containers listed below." attributes:bodyAttributes]];
+		[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\nThe app runs sandboxed and can only access the containers listed below.", nil) attributes:bodyAttributes]];
 	}
 
-	[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n\nCapabilities" attributes:headerAttributes]];
+	[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\n\nCapabilities", nil) attributes:headerAttributes]];
 	if(isPlatformApplication && isUnsandboxed && hasPersonaMngmt)
 	{
-		[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"\nThe app can spawn its own embedded binaries with root privileges." attributes:bodyDangerAttributes]];
+		[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\nThe app can spawn its own embedded binaries with root privileges.", nil) attributes:bodyDangerAttributes]];
 	}
 	else if(isPlatformApplication && isUnsandboxed)
 	{
-		[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"\nThe app can spawn arbitrary binaries as the mobile user." attributes:bodyWarningAttributes]];
+		[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\nThe app can spawn arbitrary binaries as the mobile user.", nil) attributes:bodyWarningAttributes]];
 	}
 	else
 	{
-		[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"\nThe app can not spawn other binaries." attributes:bodyAttributes]];
+		[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\nThe app can not spawn other binaries.", nil) attributes:bodyAttributes]];
 	}
 
 	if(allowedTccServices.count)
 	{
-		[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n\nPrivacy" attributes:headerAttributes]];
-		[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"\nThe app can access the following services without asking for permission:\n" attributes:bodyWarningAttributes]];
+		[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\n\nPrivacy", nil) attributes:headerAttributes]];
+		[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\nThe app can access the following services without asking for permission:\n", nil) attributes:bodyWarningAttributes]];
 		[description appendAttributedString:[[NSAttributedString alloc] initWithString:[NSListFormatter localizedStringByJoiningStrings:[allowedTccServices allObjects]] attributes:bodyAttributes]];
 	}
 	
 	if (allowedMGKeys.count)
 	{
-		[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n\nDevice Info" attributes:headerAttributes]];
-		[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"\nThe app can access protected information about this device:\n" attributes:bodyWarningAttributes]];
+		[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\n\nDevice Info", nil) attributes:headerAttributes]];
+		[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\nThe app can access protected information about this device:\n", nil) attributes:bodyWarningAttributes]];
 		[description appendAttributedString:[[NSAttributedString alloc] initWithString:[NSListFormatter localizedStringByJoiningStrings:[allowedMGKeys allObjects]] attributes:bodyAttributes]];
 	}
     
 	if(unrestrictedContainerAccess || accessibleContainers.count)
 	{
-		[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n\nAccessible Containers" attributes:headerAttributes]];
+		[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\n\nAccessible Containers", nil) attributes:headerAttributes]];
 		if(unrestrictedContainerAccess)
 		{
-			[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"\nUnrestricted, the app can access all data containers on the system." attributes:bodyDangerAttributes]];
+			[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\nUnrestricted, the app can access all data containers on the system.", nil) attributes:bodyDangerAttributes]];
 		}
 		else
 		{
@@ -1125,10 +1125,10 @@ extern UIImage* imageWithSize(UIImage* image, CGSize size);
 
 	if(unrestrictedKeychainAccess || accessibleKeychainGroups.count)
 	{
-		[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n\nAccessible Keychain Groups" attributes:headerAttributes]];
+		[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\n\nAccessible Keychain Groups", nil) attributes:headerAttributes]];
 		if(unrestrictedKeychainAccess)
 		{
-			[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"\nUnrestricted, the app can access the entire keychain." attributes:bodyDangerAttributes]];
+			[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\nUnrestricted, the app can access the entire keychain.", nil) attributes:bodyDangerAttributes]];
 		}
 		else
 		{
@@ -1141,7 +1141,7 @@ extern UIImage* imageWithSize(UIImage* image, CGSize size);
 
 	if(URLSchemes.count)
 	{
-		[description appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n\nURL Schemes" attributes:headerAttributes]];
+		[description appendAttributedString:[[NSAttributedString alloc] initWithString:NSLocalizedString(@"\n\nURL Schemes", nil) attributes:headerAttributes]];
 
 		for(NSString* URLScheme in URLSchemes)
 		{
